@@ -80,24 +80,24 @@ def list_lnk_files(directory):
 # Function to load custom icons
 def load_custom_icons():
     custom_icons = {
-        'example.lnk': 'icons/custom_icon.png',
+        'Xbox.lnk': 'icons/xbox.png',
     }
     loaded_icons = {}
     for pattern, icon_path in custom_icons.items():
         if os.path.exists(icon_path):
-            loaded_icons[pattern] = Image.open(icon_path).resize((32, 32), Image.LANCZOS)  # Resize here
+            loaded_icons[pattern] = Image.open(icon_path).resize((64, 64), Image.LANCZOS)  # Resize here
     return loaded_icons
 
 # Main application class
 class LnkIconApp:
     def __init__(self, root, directory):
         self.root = root
-        self.root.title("LNK Icons")
+        self.root.title(directory)
         self.directory = directory
         self.custom_icons = load_custom_icons()
 
-        self.canvas = Canvas(self.root)
-        self.frame = ttk.Frame(self.canvas)
+        self.canvas = Canvas(self.root)  # No custom style
+        self.frame = ttk.Frame(self.canvas)  # No custom style
         self.scrollbar = Scrollbar(self.root, orient="vertical", command=self.canvas.yview)
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
 
@@ -129,11 +129,11 @@ class LnkIconApp:
                 icon_extractor = IconExtractor(file_path)
                 icon_image = icon_extractor.icon_to_image()
                 if icon_image:
-                    icon_image = icon_image.resize((32, 32), Image.LANCZOS)  # Resize here
+                    icon_image = icon_image.resize((64, 64), Image.LANCZOS)  # Resize here
 
             if icon_image:
                 tk_image = ImageTk.PhotoImage(icon_image)
-                label = tk.Label(self.frame, image=tk_image)
+                label = tk.Label(self.frame, image=tk_image)  # No custom style
                 label.image = tk_image
                 label.grid(row=index // 4, column=index % 4, padx=10, pady=10)
                 label.bind("<Button-1>", lambda event, lnk_file=lnk_file: self.open_link(lnk_file))
