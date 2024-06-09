@@ -3,6 +3,7 @@ import sys
 import tkinter as tk
 from tkinter import ttk, Scrollbar, Canvas
 from PIL import Image, ImageTk
+import json
 import ctypes
 from ctypes import wintypes
 
@@ -77,11 +78,12 @@ class IconExtractor:
 def list_lnk_files(directory):
     return [f for f in os.listdir(directory) if f.endswith('.lnk')]
 
-# Function to load custom icons
+# Function to load custom icons from a JSON file
 def load_custom_icons():
-    custom_icons = {
-        'Xbox.lnk': 'icons/xbox.png',
-    }
+    custom_icons = {}
+    with open('custom_icons.json', 'r') as file:
+        custom_icons = json.load(file)
+    
     loaded_icons = {}
     for pattern, icon_path in custom_icons.items():
         if os.path.exists(icon_path):
