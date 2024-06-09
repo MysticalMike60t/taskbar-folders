@@ -1,7 +1,6 @@
 import os
 import sys
-import tkinter as tk
-from tkinter import ttk
+import customtkinter as ctk
 from PIL import Image, ImageTk
 
 def load_icons(folder_path, custom_icons):
@@ -31,8 +30,10 @@ def load_icons(folder_path, custom_icons):
     return icons
 
 def open_folder(folder_path, custom_icons):
-    root = tk.Tk()
+    root = ctk.CTk()
     root.title("Folder Contents")
+    
+    print(root.cget("fg_color"))
 
     icons = load_icons(folder_path, custom_icons)
     if not icons:
@@ -43,7 +44,7 @@ def open_folder(folder_path, custom_icons):
     for i, (file_name, icon_info) in enumerate(icons.items()):
         row = i // 4
         col = i % 4
-        button = ttk.Button(root, image=icon_info["photo"], command=lambda path=icon_info["file_path"]: os.startfile(path))
+        button = ctk.CTkButton(root, image=icon_info["photo"], command=lambda path=icon_info["file_path"]: os.startfile(path), text="", fg_color=root.cget("fg_color"), hover_color="gray16")  # Corrected "app" to "root"
         button.image = icon_info["photo"]
         button.grid(row=row, column=col, padx=5, pady=5)
 
@@ -79,7 +80,6 @@ def main():
             "ubisoft connect.lnk": "ubisoft.png",
         }
     }
-
 
     open_folder(folder_path, custom_icons)
 
